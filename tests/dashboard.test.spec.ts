@@ -12,25 +12,22 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Add new Employee", async ({ page }) => {
-  await test.step("When they are in dashboard page, they are able to add a new employee", async () => {
-    const dashboard = new DashboardPage(page);
+  const dashboard = new DashboardPage(page);
 
-    const employeesBeforeAdding = await dashboard.currentEmployeesQuantity();
+  const employeesBeforeAdding = await dashboard.currentEmployeesQuantity();
 
-    await dashboard.addNewEmployee();
-    await dashboard.waitForRowIncrease(employeesBeforeAdding);
+  await dashboard.addNewEmployee();
+  await dashboard.waitForRowIncrease(employeesBeforeAdding);
 
-    const employeesAfterAdding = await dashboard.currentEmployeesQuantity();
+  const employeesAfterAdding = await dashboard.currentEmployeesQuantity();
 
-    expect(employeesAfterAdding).toBe(employeesBeforeAdding + 1);
-    console.log("Actualmente hay: ", employeesAfterAdding)
-  });
+  expect(employeesAfterAdding).toBe(employeesBeforeAdding + 1);
 });
 
 test("Edit employee", async ({ page }) => {
   const dashboard = new DashboardPage(page);
 
-    const hasRecords = await dashboard.recordsDisplayed();
+  const hasRecords = await dashboard.recordsDisplayed();
 
   if (!hasRecords) {
     test.skip(true, "⏭ No hay registros para editar");
@@ -45,6 +42,20 @@ test("Edit employee", async ({ page }) => {
   expect(dataAfter).toEqual(dataEdited);
 });
 
-test("Delete" , async({ page })=>{
+test("Delete employee", async ({ page }) => {
+  const dashboard = new DashboardPage(page);
 
-} )
+  const initialCount = await dashboard.currentEmployeesQuantity();
+
+  if (initialCount === NUMBERS.ZERO) {
+    console.warn("No employee to delete. Adding one...");
+    await dashboard.addNewEmployee();
+    await dashboard.waitForRowIncrease(initialCount);
+  }
+
+  const countBeforeDelete = await dashboard.currentEmployeesQuantity();
+  await dashboard.deleteFirstEmployee();
+  const countAfterDelete = await dashboard.currentEmployeesQuantity();
+
+  expect(countAfterDelete).toBe(countBeforeDelete - NUMBERS.ONE);
+});

@@ -8,4 +8,6 @@ export const NUMBERS = {
 
 export const TIMEOUT ={
     FIVE_SECONDS: 5000,
+    TEN_SECONDS: 10000,
+    HALF_SECOND: 500,
 }

@@ -20,9 +20,10 @@ export class LoginPage {
     await this.userNameTextField.fill(username);
     await this.passwordTextField.fill(password);
     await this.logInButton.click();
-    await this.page.waitForLoadState("networkidle");
+
     const dashboard = new DashboardPage(this.page);
     await expect(dashboard.dashboardTitle).toBeVisible();
+    await dashboard.waitUntilDashboardLoaded();
   }
 
   //TODO invalid credentials scenario
