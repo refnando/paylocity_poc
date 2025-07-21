@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
   await loginpage.validLogin(user, pwd);
 });
 
-test("Dashboard validations", async ({ page }) => {
+test("Add new Employee", async ({ page }) => {
   await test.step("When they are in dashboard page, they are able to add a new employee", async () => {
     const dashboard = new DashboardPage(page);
 
@@ -23,5 +23,28 @@ test("Dashboard validations", async ({ page }) => {
     const employeesAfterAdding = await dashboard.currentEmployeesQuantity();
 
     expect(employeesAfterAdding).toBe(employeesBeforeAdding + 1);
+    console.log("Actualmente hay: ", employeesAfterAdding)
   });
 });
+
+test("Edit employee", async ({ page }) => {
+  const dashboard = new DashboardPage(page);
+
+    const hasRecords = await dashboard.recordsDisplayed();
+
+  if (!hasRecords) {
+    test.skip(true, "⏭ No hay registros para editar");
+  }
+
+  const rowIndex = -NUMBERS.ONE;
+  const dataBefore = await dashboard.getRowValues(rowIndex);
+  const dataEdited = await dashboard.editEmployee(rowIndex);
+  const dataAfter = await dashboard.getRowValues(rowIndex);
+
+  expect(dataAfter).not.toEqual(dataBefore);
+  expect(dataAfter).toEqual(dataEdited);
+});
+
+test("Delete" , async({ page })=>{
+
+} )
