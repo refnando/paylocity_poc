@@ -30,7 +30,7 @@ test("Edit employee", async ({ page }) => {
   const hasRecords = await dashboard.recordsDisplayed();
 
   if (!hasRecords) {
-    test.skip(true, "⏭ No hay registros para editar");
+    test.skip(true, "⏭ There are no records to edit. Skipping test.");
   }
 
   const rowIndex = -NUMBERS.ONE;
