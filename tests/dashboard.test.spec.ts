@@ -21,7 +21,7 @@ test("Add new Employee", async ({ page }) => {
 
   const employeesAfterAdding = await dashboard.currentEmployeesQuantity();
 
-  expect(employeesAfterAdding).toBe(employeesBeforeAdding + 1);
+  expect(employeesAfterAdding).toBe(employeesBeforeAdding + NUMBERS.ONE);
 });
 
 test("Edit employee", async ({ page }) => {
