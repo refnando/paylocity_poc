@@ -8,8 +8,7 @@ export const getApiContext = async (): Promise<APIRequestContext> => {
   'content-type': 'application/json',
   Authorization: process.env.AUTH_TOKEN || '',
   Cookie: [
-    process.env.ANTIFORGERY_COOKIE,
-    process.env.ASPNETCORE_COOKIES,
+    process.env.AUTH_TOKEN ? `Authorization=${process.env.AUTH_TOKEN}` : '',
     process.env.ANTIFORGERY_COOKIE ? `Antiforgery=${process.env.ANTIFORGERY_COOKIE}` : '',
     process.env.ASPNETCORE_COOKIES ? `ASPNETCORE_COOKIES=${process.env.ASPNETCORE_COOKIES}` : '',
     ].join('; ')
