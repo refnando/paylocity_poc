@@ -15,4 +15,5 @@ test('Debug API auth connection', async () => {
   } else {
     console.log('✅ Auth worked!');
   }
+  
 });
